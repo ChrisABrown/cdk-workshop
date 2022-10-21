@@ -1,5 +1,5 @@
 import { Template, Capture } from "aws-cdk-lib/assertions";
-import * as cdk from "aws-cdk-lib";
+import cdk = require("aws-cdk-lib");
 import * as lambda from "aws-cdk-lib/aws-lambda";
 import { HitCounter } from "../lib/hitcounter";
 
@@ -16,6 +16,25 @@ test("DynamoDB Table Created", () => {
 
   const template = Template.fromStack(stack);
   template.resourceCountIs("AWS::DynamoDB::Table", 1);
+});
+
+test("DynamoDB Table Created with Encryption", () => {
+  const stack = new cdk.Stack();
+
+  new HitCounter(stack, "MyTestConstruct", {
+    downstream: new lambda.Function(stack, "TestFunction", {
+      runtime: lambda.Runtime.NODEJS_16_X,
+      handler: "hello.handler",
+      code: lambda.Code.fromAsset("lambda"),
+    }),
+  });
+
+  const template = Template.fromStack(stack);
+  template.hasResourceProperties("AWS::DynamoDB::Table", {
+    SSESpecification: {
+      SSEEnabled: true,
+    },
+  });
 });
 
 test("Lambda Has Environment Variables", () => {
