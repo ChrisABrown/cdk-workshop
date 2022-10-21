@@ -1,11 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\bin",
-    "\\lambda",
-    "\\lib",
-    "\\test"
+    ""
   ],
-  "SelectedNode": "\\tsconfig.json",
+  "SelectedNode": "\\lib",
   "PreviewInSolutionExplorer": false
 }
