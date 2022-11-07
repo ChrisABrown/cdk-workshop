@@ -65,3 +65,18 @@ test("Lambda Has Environment Variables", () => {
     },
   });
 });
+
+test("read capacity can be configured", () => {
+  const stack = new cdk.Stack();
+
+  expect(() => {
+    new HitCounter(stack, "MyTestConstruct", {
+      downstream: new lambda.Function(stack, "TestFunction", {
+        runtime: lambda.Runtime.NODEJS_16_X,
+        handler: "hello.handler",
+        code: lambda.Code.fromAsset("lambda"),
+      }),
+      readCapacity: 3,
+    });
+  }).toThrowError(/read capacity must be more than 5 and less than 20/);
+});
