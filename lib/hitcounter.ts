@@ -14,12 +14,6 @@ export class HitCounter extends Construct {
   public readonly table: dynamodb.Table;
 
   constructor(scope: Construct, id: string, props: HitCounterProps) {
-    if (
-      props.readCapacity !== undefined &&
-      (props.readCapacity < 5 || props.readCapacity > 20)
-    ) {
-      throw new Error("readCapacity must be greater than 5 and less than 20");
-    }
     super(scope, id);
     const table = new dynamodb.Table(this, "Hits", {
       partitionKey: {
