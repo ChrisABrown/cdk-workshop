@@ -78,5 +78,5 @@ test("read capacity can be configured", () => {
       }),
       readCapacity: 3,
     });
-  }).toThrowError(/read capacity must be more than 5 and less than 20/);
+  }).toThrowError(/readCapacity must be greater than 5 and less than 20/);
 });
